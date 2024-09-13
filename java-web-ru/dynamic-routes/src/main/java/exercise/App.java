@@ -21,10 +21,14 @@ public final class App {
         // BEGIN
         app.get("/companies/{id}", ctx -> {
             var id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(0);
-            var company = COMPANIES.get(id);
-            if (company == null) {
+            Object company;
+            try {
+                company = COMPANIES.get(id);
+            } catch(Exception e) {
                 throw new NotFoundResponse("Entity with id = " + id + " not found");
+
             }
+
             ctx.json(company);
         });
         // END
