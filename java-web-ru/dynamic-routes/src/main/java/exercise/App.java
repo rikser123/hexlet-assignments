@@ -24,7 +24,7 @@ public final class App {
             Object company;
             try {
                 company = COMPANIES.get(id);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 throw new NotFoundResponse("Entity with id = " + id + " not found");
 
             }
