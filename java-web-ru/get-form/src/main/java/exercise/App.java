@@ -22,7 +22,7 @@ public final class App {
         // BEGIN
         app.get("/users", ctx -> {
             var term = ctx.queryParamAsClass("term", String.class).getOrDefault("");
-            var usersList = USERS.stream().filter(user -> user.getFirstName().contains(term)).toList();
+            var usersList = USERS.stream().filter(user -> user.getFirstName().toLowerCase().contains(term.toLowerCase())).toList();
             System.out.println(usersList);
             var page = new UsersPage(usersList, term);
             ctx.render("users/index.jte", model("page", page));
