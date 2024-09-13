@@ -20,14 +20,8 @@ public final class App {
 
         // BEGIN
         app.get("/companies/{id}", ctx -> {
-            var id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(0);
-            Object company;
-            try {
-                company = COMPANIES.get(id);
-            } catch (Exception e) {
-                throw new NotFoundResponse("Entity with id = " + id + " not found");
-
-            }
+            var id = ctx.pathParam("id");
+            var company = COMPANIES.stream().filter(item -> item.get("id").equals(id)).findFirst().orElseThrow(() -> new NotFoundResponse("Entity with id = " + id + " not found"));
 
             ctx.json(company);
         });
