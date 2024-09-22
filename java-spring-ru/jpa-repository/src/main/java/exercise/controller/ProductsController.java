@@ -23,14 +23,14 @@ public class ProductsController {
 
     // BEGIN
     @GetMapping
-    public List<Product> findProducts(@RequestParam Integer min, @RequestParam Integer max) {
+    public List<Product> findProducts(@RequestParam(required = false) Integer min, @RequestParam(required = false) Integer max) {
         List<Product> products;
         if (min == null && max == null) {
             products = productRepository.findAll();
         } else  if (min == null) {
             products = productRepository.findAllByPriceLessThanEqualOrderByPrice(max);
         } else if (max == null) {
-            products = productRepository.findAllByPriceGreaterThanEqualOrderByPrice(min)
+            products = productRepository.findAllByPriceGreaterThanEqualOrderByPrice(min);
         } else {
             products = productRepository.findAllByPriceBetweenOrderByPrice(min, max);
         }
