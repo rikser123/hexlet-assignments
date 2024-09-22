@@ -77,7 +77,13 @@ class ApplicationTest {
         var task = createTask();
         var newTask = taskRepository.save(task);
 
-        mockMvc.perform(get("/tasks/" + newTask.getId())).andExpect(status().isOk());
+        var result = mockMvc.perform(get("/tasks/" + newTask.getId())).andExpect(status().isOk()).andReturn();
+        var body = result.getResponse().getContentAsString();
+
+        assertThatJson(body).and(
+                v -> v.node("title").isEqualTo(task.getTitle()),
+                v -> v.node("description").isEqualTo(task.getDescription())
+        );
 
         taskRepository.deleteById(newTask.getId());
     }
