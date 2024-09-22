@@ -93,6 +93,20 @@ class ApplicationTest {
         var task = createTask();
         var request = post("/tasks").contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsString(task));
         mockMvc.perform(request).andExpect(status().isCreated());
+
+        var createdTask = taskRepository.findByTitle(task.getTitle()).get();
+        assertThat(createdTask.getTitle()).isEqualTo(task.getTitle());
+    }
+
+    @Test
+    public void deleteTask()  throws Exception {
+        var task = createTask();
+        taskRepository.save(task);
+        var request = delete("/tasks/{id}", task.getId());
+        mockMvc.perform(request).andExpect(status().isOk());
+
+        var currentTask = taskRepository.findById(task.getId()).orElse(null);
+        assertThat(currentTask).isNull();
     }
     // END
 }
