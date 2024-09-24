@@ -36,16 +36,12 @@ public class BookService {
 
     public BookDTO createBook(BookCreateDTO bookData) {
         var book = bookMapper.map(bookData);
-        var author = authorRepository.findById(bookData.getAuthorId());
-        book.setAuthor(author.get());
         var newBook = bookRepository.save(book);
         return bookMapper.map(newBook);
     }
 
     public BookDTO updateBook(Long id, BookUpdateDTO bookData) {
         var currentBook = bookRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Book with id" + id + "not found"));
-        var author = authorRepository.findById(bookData.getAuthorId().get()).orElseThrow(() -> new ResourceNotFoundException("Book with id" + bookData.getAuthorId() + "not found"));
-        currentBook.setAuthor(author);
         bookMapper.update(bookData, currentBook);
         var newBook = bookRepository.save(currentBook);
         return bookMapper.map(newBook);

@@ -124,19 +124,19 @@ class BooksControllerTest {
         assertThat(book.getAuthor().getId()).isEqualTo(testBook.getAuthor().getId());
     }
 
-//    @Test
-//    public void testCreateWithWrongauthor() throws Exception {
-//        var dto = mapper.map(testBook);
-//        dto.setAuthorId(12345L);
-//
-//        var request = post("/books")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(om.writeValueAsString(dto));
-//
-//        mockMvc.perform(request)
-//                .andExpect(status().isBadRequest());
-//    }
-//
+    @Test
+    public void testCreateWithWrongauthor() throws Exception {
+        var dto = mapper.map(testBook);
+        dto.setAuthorId(12345L);
+
+        var request = post("/books")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(om.writeValueAsString(dto));
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest());
+    }
+
     @Test
     public void testUpdate() throws Exception {
         bookRepository.save(testBook);
