@@ -54,10 +54,6 @@ public class User implements BaseEntity, UserDetails {
     private List<Article> articles = new ArrayList<>();
 
     // BEGIN
-    public String getEmail() {
-        return email;
-    }
-
     @Override
     public String getPassword() {
         return passwordDigest;
